@@ -14,7 +14,14 @@ pipeline{
         }
       }
     }
+
+    stage("Checks"){
+      steps{
+        sh("pio check --skip-packages --severity=low --json-output")
+      }
+    }
   }
+
   post{
     always{
       sh("pio system prune --force")
