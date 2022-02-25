@@ -16,7 +16,12 @@ pipeline{
       sh("pio system prune --force")
     }
     success{
-      echo "========pipeline executed successfully ========"
+      archiveArtifacts(
+        artifacts: '.pio/build/uno/firmware.hex',
+        fingerprint: true,
+        followSymlinks: false,
+        onlyIfSuccessful: true
+      )
     }
     failure{
       echo "========pipeline execution failed========"
