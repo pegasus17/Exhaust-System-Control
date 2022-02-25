@@ -9,6 +9,7 @@ pipeline{
     stage("Build"){
       steps{
         dir("${PROJECT_ROOT}") {
+          sh("pio system info")
           sh("pio run --environment uno -t clean")
           sh("pio run --environment uno")
         }
