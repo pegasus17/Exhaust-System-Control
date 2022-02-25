@@ -14,10 +14,11 @@ pipeline{
         }
       }
     }
-
     stage("Checks"){
       steps{
-        sh("pio check --skip-packages --severity=low --json-output")
+        dir("${PROJECT_ROOT}") {
+          sh("pio check --skip-packages --severity=low --json-output")
+        }
       }
     }
   }
