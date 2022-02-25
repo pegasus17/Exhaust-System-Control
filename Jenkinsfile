@@ -13,7 +13,7 @@ pipeline{
   }
   post{
     always{
-      echo "========always========"
+      sh("pio system prune --force")
     }
     success{
       echo "========pipeline executed successfully ========"
