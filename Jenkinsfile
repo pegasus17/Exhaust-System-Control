@@ -2,10 +2,13 @@ pipeline{
   agent{
     label "PlatformIO"
   }
+  environment{
+    PROJECT_ROOT = "ExhaustControl"
+  }
   stages{
     stage("Build"){
       steps{
-        dir("ExhaustControl") {
+        dir("${PROJECT_ROOT}") {
           sh("pio run -v")
         }
       }
@@ -16,12 +19,14 @@ pipeline{
       sh("pio system prune --force")
     }
     success{
-      archiveArtifacts(
-        artifacts: '.pio/build/uno/firmware.hex',
-        fingerprint: true,
-        followSymlinks: false,
-        onlyIfSuccessful: true
-      )
+      dir("${PROJECT_ROOT}"){
+        archiveArtifacts(
+          artifacts: '.pio/build/uno/firmware.hex',
+          fingerprint: true,
+          followSymlinks: false,
+          onlyIfSuccessful: true
+        )
+      }
     }
     failure{
       echo "========pipeline execution failed========"
